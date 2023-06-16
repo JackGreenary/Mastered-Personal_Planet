@@ -11,15 +11,29 @@ public class CameraManager : MonoBehaviour
     public float minDistance = 2; // The distance from the target
     public float maxDistance = 10; // The distance from the target
 
+    public bool canRotate;
+
+    [SerializeField]
+    public Texture2D mouseGrab;
+    [SerializeField]
+    private bool dragging;
+
     private Vector2 mouseMovement;
+
 
     void Update()
     {
         if (target != null)
         {
-            // Handle camera rotation
-            if (Input.GetMouseButton(0))
+            if (canRotate)
             {
+                Vector2 hotspot = new Vector2(mouseGrab.width / 2, mouseGrab.height / 2);
+                Cursor.SetCursor(mouseGrab, hotspot, CursorMode.Auto);
+            }
+            // Handle camera rotation
+            if (Input.GetMouseButton(0) && canRotate || dragging)
+            {
+                dragging = true;
                 mouseMovement.x = Input.GetAxis("Mouse X") * rotationSpeed;
                 mouseMovement.y = Input.GetAxis("Mouse Y") * rotationSpeed;
 
@@ -28,6 +42,10 @@ public class CameraManager : MonoBehaviour
                 eulerAngles += new Vector3(-mouseMovement.y, mouseMovement.x, 0);
                 Quaternion camRotation = Quaternion.Euler(eulerAngles);
                 transform.rotation = camRotation;
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                dragging = false;
             }
 
             // Handle camera zoom

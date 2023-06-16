@@ -5,12 +5,19 @@ using UnityEngine;
 public class TerrainFace
 {
 
+    [SerializeField]
     ShapeGenerator shapeGenerator;
+    [SerializeField]
     Mesh mesh;
+    [SerializeField]
     int resolution;
+    [SerializeField]
     Vector3 localUp;
+    [SerializeField]
     Vector3 axisA;
+    [SerializeField]
     Vector3 axisB;
+    [SerializeField]
 
     public TerrainFace(ShapeGenerator shapeGenerator, Mesh mesh, int resolution, Vector3 localUp)
     {

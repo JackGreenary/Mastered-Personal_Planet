@@ -20,14 +20,18 @@ public class Planet : MonoBehaviour
     [HideInInspector]
     public bool colourSettingsFoldout;
 
-    ShapeGenerator shapeGenerator = new ShapeGenerator();
+    [SerializeField]
+    ShapeGenerator shapeGenerator;
+    [SerializeField]
     ColourGenerator colourGenerator = new ColourGenerator();
 
-    [SerializeField, HideInInspector]
+    [SerializeField]
     MeshFilter[] meshFilters;
     [SerializeField]
     TerrainFace[] terrainFaces;
 
+    [SerializeField]
+    private bool Regen;
 
     void Initialize()
     {
@@ -58,6 +62,15 @@ public class Planet : MonoBehaviour
             terrainFaces[i] = new TerrainFace(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
             bool renderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
             meshFilters[i].gameObject.SetActive(renderFace);
+        }
+    }
+
+    private void Update()
+    {
+        if (Regen)
+        {
+            Regen = false;
+            OnShapeSettingsUpdated();
         }
     }
 

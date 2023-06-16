@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShapeGenerator
+public class ShapeGenerator : MonoBehaviour
 {
 
+    [SerializeField]
     ShapeSettings settings;
+    [SerializeField]
     INoiseFilter[] noiseFilters;
+    [SerializeField]
     public MinMax elevationMinMax;
 
     public void UpdateSettings(ShapeSettings settings)

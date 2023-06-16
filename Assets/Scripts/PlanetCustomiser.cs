@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class PlanetCustomiser : MonoBehaviour
 {
     public Planet planetToCustomise;
-    
+
+    public new string name;
+
     public float defaultSeaLevel;
     public float seaLevelPercent;
 
@@ -25,6 +27,16 @@ public class PlanetCustomiser : MonoBehaviour
     public ColorPaletteController colourWheel;
     public TextMeshProUGUI colourWheelTitle;
 
+    [SerializeField]
+    private TextMeshProUGUI nameTxt;
+    [SerializeField]
+    private TMP_InputField nameInput;
+    [SerializeField]
+    private Button nameButton;
+    [SerializeField]
+    private Sprite nameButtonEditImg;
+    [SerializeField]
+    private Sprite nameButtonTickImg;
     [SerializeField]
     private Button planetSizeButton;
     [SerializeField]
@@ -56,8 +68,13 @@ public class PlanetCustomiser : MonoBehaviour
     private Color groundColour;
     private Color mountainColour;
 
+    private bool settingSlider;
+
     public void Start()
     {
+        // Setup name button listener
+        nameButton.onClick.AddListener(delegate { ShowHideNameInput(); });
+
         // Setup slider button listeners
         planetSizeButton.onClick.AddListener(delegate { ShowPercentSlider(0); });
         seaLevelButton.onClick.AddListener(delegate { ShowPercentSlider(1); });
@@ -80,20 +97,46 @@ public class PlanetCustomiser : MonoBehaviour
         // Start with customisation screens inactive
         percentSliderParent.SetActive(false);
         colourWheelParent.SetActive(false);
+
+        settingSlider = false;
+        nameInput.gameObject.SetActive(false);
     }
 
     private void BackToCustomisations()
     {
+        settingSlider = false;
         percentSliderParent.SetActive(false);
         colourWheelParent.SetActive(false);
-        iTween.MoveTo(gameObject, new Vector3(transform.position.x + 200, transform.position.y), .5f);
+        iTween.MoveTo(gameObject, new Vector3(transform.position.x + 500, transform.position.y), .5f);
+    }
+
+    private void ShowHideNameInput()
+    {
+        if (nameInput.IsActive())
+        {
+            // Hide input and update name
+            name = nameInput.text;
+            nameTxt.text = name;
+            nameInput.gameObject.SetActive(false);
+            nameTxt.gameObject.SetActive(true);
+            nameButton.image.sprite = nameButtonEditImg;
+        }
+        else
+        {
+            // Show input update input
+            name = nameTxt.text;
+            nameInput.text = name;
+            nameInput.gameObject.SetActive(true);
+            nameTxt.gameObject.SetActive(false);
+            nameButton.image.sprite = nameButtonTickImg;
+        }
     }
 
     private void ShowColourWheel(int colour)
     {
         colourInt = colour;
         colourWheelParent.SetActive(true);
-        iTween.MoveTo(gameObject, new Vector3(transform.position.x - 200, transform.position.y), .5f);
+        iTween.MoveTo(gameObject, new Vector3(transform.position.x - 500, transform.position.y), .5f);
 
         switch (colour)
         {
@@ -144,51 +187,56 @@ public class PlanetCustomiser : MonoBehaviour
         // Set planet to high res
         planetToCustomise.resolution = 256;
     }
-    
+
     private void ShowPercentSlider(int customisation)
     {
         customisationInt = customisation;
         percentSliderParent.SetActive(true);
 
-        iTween.MoveTo(gameObject, new Vector3(transform.position.x - 200, transform.position.y), .5f);
+        iTween.MoveTo(gameObject, new Vector3(transform.position.x - 500, transform.position.y), .5f);
 
         switch (customisation)
         {
             case 0:
                 percentSliderTitle.text = "Planet Size";
-                percentSlider.value = planetSizePercent;
+                percentSlider.value = planetSizePercent/100;
                 break;
             case 1:
                 percentSliderTitle.text = "Sea Level";
-                percentSlider.value = seaLevelPercent;
+                percentSlider.value = seaLevelPercent / 100;
                 break;
             case 2:
                 percentSliderTitle.text = "Mountain Height";
-                percentSlider.value = mountainHeightPercent;
+                percentSlider.value = mountainHeightPercent / 100;
                 break;
             default:
                 break;
         }
+
+        settingSlider = true;
     }
 
     private void PercentSliderChanged()
     {
-        switch (customisationInt)
+        if (settingSlider)
         {
-            case 0:
-                planetSizePercent = (percentSlider.value * 100);
-                PlanetSize();
-                break;
-            case 1:
-                seaLevelPercent = (percentSlider.value * 100);
-                SeaLevel();
-                break;
-            case 2:
-                mountainHeightPercent = (percentSlider.value * 100);
-                MountainHeight();
-                break;
-            default:
-                break;
+            switch (customisationInt)
+            {
+                case 0:
+                    planetSizePercent = (percentSlider.value * 100);
+                    PlanetSize();
+                    break;
+                case 1:
+                    seaLevelPercent = (percentSlider.value * 100);
+                    SeaLevel();
+                    break;
+                case 2:
+                    mountainHeightPercent = (percentSlider.value * 100);
+                    MountainHeight();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
