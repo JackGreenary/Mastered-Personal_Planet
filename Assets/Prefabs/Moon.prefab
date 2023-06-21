@@ -189,11 +189,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moonPlanet: {fileID: 0}
+  _moonId: 0
   _title: {fileID: 1572286427359155435}
   _size: 0
   _color:
     serializedVersion: 2
     rgba: 0
+  removeMoonButton: {fileID: 113598218712066072}
+  sizeButton: {fileID: 1572286427375417391}
+  colourButton: {fileID: 1572286426457453310}
 --- !u!1 &1572286426451481505
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1572286426457453311
 RectTransform:
   m_ObjectHideFlags: 0
