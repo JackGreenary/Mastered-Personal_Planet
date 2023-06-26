@@ -15,10 +15,6 @@ public class PlanetCustomiser : MonoBehaviour
     public SliderController sliderController;
     public PaletteController paletteController;
 
-    public GameObject colourWheelParent;
-    public ColorPaletteController colourWheel;
-    public TextMeshProUGUI colourWheelTitle;
-
     public GameObject moonMenuParent;
 
     [SerializeField]
@@ -57,15 +53,10 @@ public class PlanetCustomiser : MonoBehaviour
     [SerializeField]
     private Button backToCustFromMoons;
 
-    [SerializeField]
-    private int customisationInt;
-    [SerializeField]
-    private int colourInt;
-
-    private Color seaColour;
-    private Color beachColour;
-    private Color groundColour;
-    private Color mountainColour;
+    public Color seaColour;
+    public Color beachColour;
+    public Color groundColour;
+    public Color mountainColour;
 
     public void Start()
     {
@@ -78,17 +69,14 @@ public class PlanetCustomiser : MonoBehaviour
         mountainHeightButton.onClick.AddListener(delegate { sliderController.ShowPercentSlider(2, planetToCustomise); });
 
         // Setup colour button listeners
-        seaColourButton.onClick.AddListener(delegate { ShowColourWheel(0); });
-        beachColourButton.onClick.AddListener(delegate { ShowColourWheel(1); });
-        groundColourButton.onClick.AddListener(delegate { ShowColourWheel(2); });
-        mountainColourButton.onClick.AddListener(delegate { ShowColourWheel(3); });
+        seaColourButton.onClick.AddListener(delegate { paletteController.ShowColourWheel(0, planetToCustomise); });
+        beachColourButton.onClick.AddListener(delegate { paletteController.ShowColourWheel(1, planetToCustomise); });
+        groundColourButton.onClick.AddListener(delegate { paletteController.ShowColourWheel(2, planetToCustomise); });
+        mountainColourButton.onClick.AddListener(delegate { paletteController.ShowColourWheel(3, planetToCustomise); });
 
         // Setup back button listeners
         backToCustFromColour.onClick.AddListener(delegate { BackToCustomisations(); });
         backToCustFromMoons.onClick.AddListener(delegate { BackToCustomisations(); });
-
-        // Setup customisation listeners
-        colourWheel.OnColorChange.AddListener(delegate { ColourWheelChanged(); });
 
         // Setup ring button listener
         showHideRingButton.onClick.AddListener(delegate { planetRing.AddRemoveRing(showHideRingButton); });
@@ -96,7 +84,6 @@ public class PlanetCustomiser : MonoBehaviour
         editMoonButton.onClick.AddListener(delegate { ShowMoonMenu(); });
 
         // Start with customisation screens inactive
-        colourWheelParent.SetActive(false);
         moonMenuParent.SetActive(false);
         nameInput.gameObject.SetActive(false);
 
@@ -106,7 +93,7 @@ public class PlanetCustomiser : MonoBehaviour
     private void BackToCustomisations()
     {
         //percentSliderParent.SetActive(false);
-        colourWheelParent.SetActive(false);
+        //colourWheelParent.SetActive(false);
         moonMenuParent.SetActive(false);
         iTween.MoveTo(gameObject, new Vector3(transform.position.x + 600, transform.position.y), .5f);
     }
@@ -137,62 +124,6 @@ public class PlanetCustomiser : MonoBehaviour
     {
         moonMenuParent.SetActive(true);
         iTween.MoveTo(gameObject, new Vector3(transform.position.x - 600, transform.position.y), .5f);
-    }
-
-    public void ShowColourWheel(int colour)
-    {
-        colourInt = colour;
-        colourWheelParent.SetActive(true);
-        iTween.MoveTo(gameObject, new Vector3(transform.position.x - 600, transform.position.y), .5f);
-
-        switch (colour)
-        {
-            case 0:
-                colourWheelTitle.text = "Sea Colour";
-                //colourWheel
-                break;
-            case 1:
-                colourWheelTitle.text = "Beach Colour";
-                //percentSlider.value = seaLevelPercent;
-                break;
-            case 2:
-                colourWheelTitle.text = "Ground Colour";
-                //percentSlider.value = mountainHeightPercent;
-                break;
-            case 3:
-                colourWheelTitle.text = "Mountain Colour";
-                //percentSlider.value = mountainHeightPercent;
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void ColourWheelChanged()
-    {
-        switch (colourInt)
-        {
-            case 0:
-                seaColour = colourWheel.SelectedColor;
-                break;
-            case 1:
-                beachColour = colourWheel.SelectedColor;
-                break;
-            case 2:
-                groundColour = colourWheel.SelectedColor;
-                break;
-            case 3:
-                mountainColour = colourWheel.SelectedColor;
-                break;
-            default:
-                break;
-        }
-
-        // Set planet to low res
-        planetToCustomise.resolution = 50;
-        UpdateColours();
-        // Set planet to high res
-        planetToCustomise.resolution = 256;
     }
 
     public void UpdateColours()

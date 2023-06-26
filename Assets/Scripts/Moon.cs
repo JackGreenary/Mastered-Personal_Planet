@@ -10,6 +10,7 @@ public class Moon : MonoBehaviour
     private MoonController _moonController;
     private PlanetCustomiser _planetCustomiser;
     private SliderController _sliderController;
+    private PaletteController _paletteController;
 
     [SerializeField]
     private int _moonId;
@@ -32,10 +33,11 @@ public class Moon : MonoBehaviour
         _moonController = moonController;
         _planetCustomiser = planetCustomiser;
         _sliderController = planetCustomiser.sliderController;
+        _paletteController = planetCustomiser.paletteController;
 
         removeMoonButton.onClick.AddListener(delegate { _moonController.RemoveMoon(_moonId); });
         sizeButton.onClick.AddListener(delegate { ShowPercentSlider(); });
-        colourButton.onClick.AddListener(delegate { _planetCustomiser.ShowColourWheel(5); });
+        colourButton.onClick.AddListener(delegate { _paletteController.ShowColourWheel(5, moonPlanet); });
     }
 
     public void ShowPercentSlider()

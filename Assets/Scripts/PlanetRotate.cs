@@ -38,7 +38,7 @@ public class PlanetRotate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public void OnDrag(PointerEventData eventData)
     {
         _rotationVelocity = eventData.delta.x * rotationSpeed;
-        transform.Rotate(Vector3.up, -_rotationVelocity, Space.Self);
+        transform.Rotate(Vector3.up, -_rotationVelocity, Space.World);
         if (_rotationVelocity > 5)
             _rotationVelocity = 5;
         if (_rotationVelocity < -5)
@@ -63,7 +63,7 @@ public class PlanetRotate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 Mathf.Sign(_rotationVelocity) * _rotationVelocity
             );
             _rotationVelocity -= deltaVelocity;
-            transform.Rotate(Vector3.up, -_rotationVelocity, Space.Self);
+            transform.Rotate(Vector3.up, -_rotationVelocity, Space.World);
             //transform.Rotate(centerPoint.position, -_rotationVelocity, Space.Self);
         }
     }
