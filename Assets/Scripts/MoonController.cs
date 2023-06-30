@@ -12,18 +12,36 @@ public class MoonController : MonoBehaviour
     private Moon moonPrefabUI;
     [SerializeField]
     private Planet moonPrefabObj;
-
+    [SerializeField]
+    private Button editMoonButton;
     [SerializeField]
     private Button addMoonButton;
-
+    [SerializeField]
+    private Button backToCustFromMoons;
     [SerializeField]
     private List<Moon> moons = new List<Moon>();
 
     // Start is called before the first frame update
     void Start()
     {
+        gameObject.SetActive(false);
         addMoonButton.onClick.AddListener(delegate { AddMoon(); });
         UpdateRemoveButtonVisibility();
+        // Setup moon button listener
+        editMoonButton.onClick.AddListener(delegate { ShowMoonMenu(); });
+        backToCustFromMoons.onClick.AddListener(delegate { BackToCustomisations(); });
+    }
+
+    private void BackToCustomisations()
+    {
+        gameObject.SetActive(false);
+        iTween.MoveTo(planetCustomiser.gameObject, new Vector3(planetCustomiser.transform.position.x + 600, planetCustomiser.transform.position.y), .5f);
+    }
+
+    private void ShowMoonMenu()
+    {
+        gameObject.SetActive(true);
+        iTween.MoveTo(planetCustomiser.gameObject, new Vector3(planetCustomiser.transform.position.x - 600, planetCustomiser.transform.position.y), .5f);
     }
 
     public void AddMoon()

@@ -15,7 +15,7 @@ public class PlanetCustomiser : MonoBehaviour
     public SliderController sliderController;
     public PaletteController paletteController;
 
-    public GameObject moonMenuParent;
+    public GameObject atmosphere;
 
     [SerializeField]
     private TextMeshProUGUI nameTxt;
@@ -46,12 +46,7 @@ public class PlanetCustomiser : MonoBehaviour
     [SerializeField]
     private Button showHideRingButton;
     [SerializeField]
-    private Button editMoonButton;
-
-    [SerializeField]
-    private Button backToCustFromColour;
-    [SerializeField]
-    private Button backToCustFromMoons;
+    private Button showHideAtmosphereButton;
 
     public Color seaColour;
     public Color beachColour;
@@ -74,28 +69,15 @@ public class PlanetCustomiser : MonoBehaviour
         groundColourButton.onClick.AddListener(delegate { paletteController.ShowColourWheel(2, planetToCustomise); });
         mountainColourButton.onClick.AddListener(delegate { paletteController.ShowColourWheel(3, planetToCustomise); });
 
-        // Setup back button listeners
-        backToCustFromColour.onClick.AddListener(delegate { BackToCustomisations(); });
-        backToCustFromMoons.onClick.AddListener(delegate { BackToCustomisations(); });
-
         // Setup ring button listener
         showHideRingButton.onClick.AddListener(delegate { planetRing.AddRemoveRing(showHideRingButton); });
-        // Setup moon button listener
-        editMoonButton.onClick.AddListener(delegate { ShowMoonMenu(); });
+        //Setup atmosphere button listener
+        showHideAtmosphereButton.onClick.AddListener(delegate { ShowHideAtmosphere(); });
 
         // Start with customisation screens inactive
-        moonMenuParent.SetActive(false);
         nameInput.gameObject.SetActive(false);
-
+        atmosphere.SetActive(false);
         moonController.HideHiddenMoons();
-    }
-
-    private void BackToCustomisations()
-    {
-        //percentSliderParent.SetActive(false);
-        //colourWheelParent.SetActive(false);
-        moonMenuParent.SetActive(false);
-        iTween.MoveTo(gameObject, new Vector3(transform.position.x + 600, transform.position.y), .5f);
     }
 
     private void ShowHideNameInput()
@@ -120,10 +102,18 @@ public class PlanetCustomiser : MonoBehaviour
         }
     }
 
-    private void ShowMoonMenu()
+    private void ShowHideAtmosphere()
     {
-        moonMenuParent.SetActive(true);
-        iTween.MoveTo(gameObject, new Vector3(transform.position.x - 600, transform.position.y), .5f);
+        if (atmosphere.activeSelf)
+        {
+            atmosphere.SetActive(false);
+            showHideAtmosphereButton.GetComponentInChildren<TextMeshProUGUI>().text = "Enabled Atmosphere";
+        }
+        else
+        {
+            atmosphere.SetActive(true);
+            showHideAtmosphereButton.GetComponentInChildren<TextMeshProUGUI>().text = "Disable Atmosphere";
+        }
     }
 
     public void UpdateColours()

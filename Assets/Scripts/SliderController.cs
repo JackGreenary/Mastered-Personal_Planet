@@ -13,6 +13,7 @@ public class SliderController : MonoBehaviour
     public float defaultPlanetSize;
     public float defaultSeaLevel;
     public float defaultMountainHeight;
+    public PlanetScaler scaler;
 
     private int customisationInt;
     private bool settingSlider;
@@ -47,15 +48,15 @@ public class SliderController : MonoBehaviour
         {
             case 0:
                 percentSliderTitle.text = "Planet Size";
-                //percentSlider.value = currentlyEditing / 100;
+                percentSlider.value = currentlyEditing.shapeSettings.planetRadius / 100;
                 break;
             case 1:
                 percentSliderTitle.text = "Sea Level";
-                //percentSlider.value = seaLevelPercent / 100;
+                percentSlider.value = currentlyEditing.shapeSettings.noiseLayers[1].noiseSettings.rigidNoiseSettings.minValue / 100;
                 break;
             case 2:
                 percentSliderTitle.text = "Mountain Height";
-                //percentSlider.value = mountainHeightPercent / 100;
+                percentSlider.value = currentlyEditing.shapeSettings.noiseLayers[1].noiseSettings.rigidNoiseSettings.strength / 100;
                 break;
             case 3:
                 percentSliderTitle.text = "Moon Size";
@@ -97,6 +98,7 @@ public class SliderController : MonoBehaviour
         currentlyEditing.shapeSettings.planetRadius = percentVal;
         currentlyEditing.OnShapeSettingsUpdated();
         currentlyEditing.resolution = 256;
+        scaler.Scale();
     }
 
     private void SeaLevel(float percent)
