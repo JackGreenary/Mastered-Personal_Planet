@@ -12,6 +12,8 @@ public class Planet : MonoBehaviour
     public enum FaceRenderMask { All, Top, Bottom, Left, Right, Front, Back };
     public FaceRenderMask faceRenderMask;
 
+    public PlanetCustomiser planetCustomiser;
+
     public ShapeSettings shapeSettings;
     public ColourSettings colourSettings;
 
@@ -19,6 +21,10 @@ public class Planet : MonoBehaviour
     public bool shapeSettingsFoldout;
     [HideInInspector]
     public bool colourSettingsFoldout;
+
+    public float defaultPlanetSize;
+    public float defaultSeaLevel;
+    public float defaultMountainHeight;
 
     [SerializeField]
     ShapeGenerator shapeGenerator;
@@ -32,6 +38,10 @@ public class Planet : MonoBehaviour
 
     [SerializeField]
     private bool Regen;
+
+    void start()
+    {
+    }
 
     void Initialize()
     {
@@ -62,6 +72,58 @@ public class Planet : MonoBehaviour
             terrainFaces[i] = new TerrainFace(shapeGenerator, meshFilters[i].mesh, resolution, directions[i]);
             bool renderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
             meshFilters[i].gameObject.SetActive(renderFace);
+        }
+
+        // Retrieve settings for the planet
+        if (name == "Planet")
+        {
+            if (PlayerPrefs.HasKey($"{ name}.PlanetSize"))
+            {
+                float size = PlayerPrefs.GetFloat($"{name}.PlanetSize");
+                shapeSettings.planetRadius = size * defaultPlanetSize;
+            }
+            if (PlayerPrefs.HasKey($"{ name}.SeaLevel"))
+            {
+                float seaLevel = PlayerPrefs.GetFloat($"{name}.SeaLevel");
+                shapeSettings.noiseLayers[1].noiseSettings.rigidNoiseSettings.minValue = seaLevel * defaultSeaLevel;
+            }
+            if (PlayerPrefs.HasKey($"{ name}.MountainHeight"))
+            {
+                float mountainHeight = PlayerPrefs.GetFloat($"{name}.MountainHeight");
+                shapeSettings.noiseLayers[1].noiseSettings.rigidNoiseSettings.strength = mountainHeight * defaultMountainHeight;
+            }
+            if (PlayerPrefs.HasKey($"{ name}.SeaColour.r") || PlayerPrefs.HasKey($"{ name}.SeaColour.g") || PlayerPrefs.HasKey($"{ name}.SeaColour.b"))
+            {
+                float r = PlayerPrefs.GetFloat($"{name}.SeaColour.r");
+                float g = PlayerPrefs.GetFloat($"{name}.SeaColour.g");
+                float b = PlayerPrefs.GetFloat($"{name}.SeaColour.b");
+
+                planetCustomiser.seaColour = new Color(r, g, b);
+            }
+            if (PlayerPrefs.HasKey($"{ name}.BeachColour.r") || PlayerPrefs.HasKey($"{ name}.BeachColour.g") || PlayerPrefs.HasKey($"{ name}.BeachColour.b"))
+            {
+                float r = PlayerPrefs.GetFloat($"{name}.BeachColour.r");
+                float g = PlayerPrefs.GetFloat($"{name}.BeachColour.g");
+                float b = PlayerPrefs.GetFloat($"{name}.BeachColour.b");
+
+                planetCustomiser.beachColour = new Color(r, g, b);
+            }
+            if (PlayerPrefs.HasKey($"{ name}.GroundColour.r") || PlayerPrefs.HasKey($"{ name}.GroundColour.g") || PlayerPrefs.HasKey($"{ name}.GroundColour.b"))
+            {
+                float r = PlayerPrefs.GetFloat($"{name}.GroundColour.r");
+                float g = PlayerPrefs.GetFloat($"{name}.GroundColour.g");
+                float b = PlayerPrefs.GetFloat($"{name}.GroundColour.b");
+
+                planetCustomiser.groundColour = new Color(r, g, b);
+            }
+            if (PlayerPrefs.HasKey($"{ name}.MountainColour.r") || PlayerPrefs.HasKey($"{ name}.MountainColour.g") || PlayerPrefs.HasKey($"{ name}.MountainColour.b"))
+            {
+                float r = PlayerPrefs.GetFloat($"{name}.MountainColour.r");
+                float g = PlayerPrefs.GetFloat($"{name}.MountainColour.g");
+                float b = PlayerPrefs.GetFloat($"{name}.MountainColour.b");
+
+                planetCustomiser.mountainColour = new Color(r, g, b);
+            }
         }
     }
 

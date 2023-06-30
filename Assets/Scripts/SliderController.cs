@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -75,15 +76,19 @@ public class SliderController : MonoBehaviour
             {
                 case 0:
                     PlanetSize(percentSlider.value);
+                    PlayerPrefs.SetFloat($"{currentlyEditing.name}.PlanetSize", percentSlider.value);
                     break;
                 case 1:
                     SeaLevel(percentSlider.value);
+                    PlayerPrefs.SetFloat($"{currentlyEditing.name}.SeaLevel", percentSlider.value);
                     break;
                 case 2:
                     MountainHeight(percentSlider.value);
+                    PlayerPrefs.SetFloat($"{currentlyEditing.name}.MountainHeight", percentSlider.value);
                     break;
                 case 3:
                     PlanetSize(percentSlider.value);
+                    PlayerPrefs.SetFloat($"{currentlyEditing.name}.PlanetSize", percentSlider.value);
                     break;
                 default:
                     break;
@@ -98,7 +103,6 @@ public class SliderController : MonoBehaviour
         currentlyEditing.shapeSettings.planetRadius = percentVal;
         currentlyEditing.OnShapeSettingsUpdated();
         currentlyEditing.resolution = 256;
-        scaler.Scale();
     }
 
     private void SeaLevel(float percent)

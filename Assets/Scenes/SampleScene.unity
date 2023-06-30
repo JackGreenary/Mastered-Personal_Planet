@@ -448,10 +448,14 @@ MonoBehaviour:
   resolution: 44
   autoUpdate: 1
   faceRenderMask: 0
+  planetCustomiser: {fileID: 0}
   shapeSettings: {fileID: 59306472}
   colourSettings: {fileID: 11400000, guid: 2117d70afc1e75c4fa12010c107047e5, type: 2}
   shapeSettingsFoldout: 1
   colourSettingsFoldout: 1
+  defaultPlanetSize: 0
+  defaultSeaLevel: 0
+  defaultMountainHeight: 0
   shapeGenerator: {fileID: 59306473}
   meshFilters:
   - {fileID: 2129576715}
@@ -1036,10 +1040,14 @@ MonoBehaviour:
   resolution: 44
   autoUpdate: 1
   faceRenderMask: 0
+  planetCustomiser: {fileID: 0}
   shapeSettings: {fileID: 112168416}
   colourSettings: {fileID: 11400000, guid: 2117d70afc1e75c4fa12010c107047e5, type: 2}
   shapeSettingsFoldout: 1
   colourSettingsFoldout: 1
+  defaultPlanetSize: 0
+  defaultSeaLevel: 0
+  defaultMountainHeight: 0
   shapeGenerator: {fileID: 112168415}
   meshFilters:
   - {fileID: 1466069063}
@@ -6147,10 +6155,14 @@ MonoBehaviour:
   resolution: 44
   autoUpdate: 1
   faceRenderMask: 0
+  planetCustomiser: {fileID: 1123672797}
   shapeSettings: {fileID: 1296457540}
   colourSettings: {fileID: 11400000, guid: 06503d0e05b96db4fb4afe024ff89367, type: 2}
   shapeSettingsFoldout: 1
   colourSettingsFoldout: 1
+  defaultPlanetSize: 20
+  defaultSeaLevel: 1
+  defaultMountainHeight: 1
   shapeGenerator: {fileID: 1296457541}
   meshFilters:
   - {fileID: 1045475647}
@@ -7445,10 +7457,14 @@ MonoBehaviour:
   resolution: 44
   autoUpdate: 1
   faceRenderMask: 0
+  planetCustomiser: {fileID: 0}
   shapeSettings: {fileID: 1587479989}
   colourSettings: {fileID: 11400000, guid: 2117d70afc1e75c4fa12010c107047e5, type: 2}
   shapeSettingsFoldout: 1
   colourSettingsFoldout: 1
+  defaultPlanetSize: 0
+  defaultSeaLevel: 0
+  defaultMountainHeight: 0
   shapeGenerator: {fileID: 1587479988}
   meshFilters:
   - {fileID: 600203612}

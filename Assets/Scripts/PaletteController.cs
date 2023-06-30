@@ -69,15 +69,27 @@ public class PaletteController : MonoBehaviour
         {
             case 0:
                 planetCustomiser.seaColour = colourWheel.SelectedColor;
+                PlayerPrefs.SetFloat($"{currentlyEditing.name}.SeaColour.r", colourWheel.SelectedColor.r);
+                PlayerPrefs.SetFloat($"{currentlyEditing.name}.SeaColour.g", colourWheel.SelectedColor.g);
+                PlayerPrefs.SetFloat($"{currentlyEditing.name}.SeaColour.b", colourWheel.SelectedColor.b);
                 break;
             case 1:
                 planetCustomiser.beachColour = colourWheel.SelectedColor;
+                PlayerPrefs.SetFloat($"{currentlyEditing.name}.BeachColour.r", colourWheel.SelectedColor.r);
+                PlayerPrefs.SetFloat($"{currentlyEditing.name}.BeachColour.g", colourWheel.SelectedColor.g);
+                PlayerPrefs.SetFloat($"{currentlyEditing.name}.BeachColour.b", colourWheel.SelectedColor.b);
                 break;
             case 2:
                 planetCustomiser.groundColour = colourWheel.SelectedColor;
+                PlayerPrefs.SetFloat($"{currentlyEditing.name}.GroundColour.r", colourWheel.SelectedColor.r);
+                PlayerPrefs.SetFloat($"{currentlyEditing.name}.GroundColour.g", colourWheel.SelectedColor.g);
+                PlayerPrefs.SetFloat($"{currentlyEditing.name}.GroundColour.b", colourWheel.SelectedColor.b);
                 break;
             case 3:
                 planetCustomiser.mountainColour = colourWheel.SelectedColor;
+                PlayerPrefs.SetFloat($"{currentlyEditing.name}.MountainColour.r", colourWheel.SelectedColor.r);
+                PlayerPrefs.SetFloat($"{currentlyEditing.name}.MountainColour.g", colourWheel.SelectedColor.g);
+                PlayerPrefs.SetFloat($"{currentlyEditing.name}.MountainColour.b", colourWheel.SelectedColor.b);
                 break;
             default:
                 break;
