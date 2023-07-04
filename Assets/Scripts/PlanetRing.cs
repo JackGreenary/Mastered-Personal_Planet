@@ -84,8 +84,10 @@ public class PlanetRing : MonoBehaviour
 
     public void AddRemoveRing(Button ringButton)
     {
+        string planetName = GetComponent<Planet>().name;
         if (ringEnabled)
         {
+            PlayerPrefs.SetInt($"{planetName}.Ring", 0);
             // Remove ring
             RemoveRing();
             ringEnabled = false;
@@ -95,12 +97,29 @@ public class PlanetRing : MonoBehaviour
         }
         else
         {
+            PlayerPrefs.SetInt($"{planetName}.Ring", 1);
             // Add ring
             AddRing();
             ringEnabled = true;
 
             // Update button
             ringButton.GetComponentInChildren<TextMeshProUGUI>().text = "Disable Ring";
+        }
+    }
+
+    public void ShowHideRing(int ringOn)
+    {
+        if(ringOn == 1)
+        {
+            // Show
+            ringEnabled = true;
+            AddRing();
+        }
+        else
+        {
+            // Hide
+            ringEnabled = false;
+            RemoveRing();
         }
     }
 }

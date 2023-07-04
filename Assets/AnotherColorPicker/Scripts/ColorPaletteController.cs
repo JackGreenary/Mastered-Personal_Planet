@@ -35,7 +35,7 @@ public class ColorPaletteController : MonoBehaviour, IBeginDragHandler, IDragHan
 
     float previousDiscretedH;
     float sat = 1, val = 1;
-    Color selectedColor;
+    public Color selectedColor;
     public Color SelectedColor {
         get
         {
