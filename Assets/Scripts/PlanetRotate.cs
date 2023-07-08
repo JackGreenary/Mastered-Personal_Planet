@@ -5,66 +5,49 @@ using UnityEngine.EventSystems;
 
 public class PlanetRotate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    //[SerializeField]
-    //private CameraManager cameraManager;
+    public Transform centerPoint;
+    public float rotationSpeed = 5f;
 
-    //private void OnMouseEnter()
-    //{
-    //    cameraManager.canRotate = true;
-    //}
+    private bool isDragging = false;
+    private Vector3 initialMousePosition;
+    private Quaternion initialRotation;
 
-    //private void OnMouseExit()
-    //{
-    //    cameraManager.canRotate = false;
-    //}
-
-    public float rotationSpeed;
-    public float rotationDamping;
-
-    [SerializeField]
-    private float _rotationVelocity;
-    private bool _dragged;
-
-    [SerializeField]
-    private Transform centerPoint;
-
-    
+    private void Start()
+    {
+        initialRotation = centerPoint.rotation;
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        _dragged = true;
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
+        isDragging = true;
+        initialMousePosition = Input.mousePosition;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        _rotationVelocity = eventData.delta.x * rotationSpeed;
-        transform.Rotate(Vector3.up, -_rotationVelocity, Space.World);
-        if (_rotationVelocity > 5)
-            _rotationVelocity = 5;
-        if (_rotationVelocity < -5)
-            _rotationVelocity = -5;
-        //transform.Rotate(centerPoint.position, -_rotationVelocity, Space.Self);
+        if (!isDragging)
+            return;
 
-        //transform.rotation = Quaternion.identity;
-        //transform.RotateAround(transform.position + new Vector3(gameObject.GetWidth() / 2f, arrow.GetHeight() / 2f, 0f), Vector3.forward, angle);
+        Vector3 currentMousePosition = Input.mousePosition;
+        Vector3 mouseDelta = currentMousePosition - initialMousePosition;
+
+        float rotationX = mouseDelta.y * rotationSpeed * Time.deltaTime;
+        float rotationY = -mouseDelta.x * rotationSpeed * Time.deltaTime;
+
+        Quaternion newRotation = Quaternion.Euler(rotationX, rotationY, 0f) * initialRotation;
+        centerPoint.rotation = newRotation;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        _dragged = false;
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
+        isDragging = false;
+        initialRotation = centerPoint.rotation;
     }
 
-    private void Update()
-    {
-        if (!_dragged && !Mathf.Approximately(_rotationVelocity, 0))
-        {
-            float deltaVelocity = Mathf.Min(
-                Mathf.Sign(_rotationVelocity) * Time.deltaTime * rotationDamping,
-                Mathf.Sign(_rotationVelocity) * _rotationVelocity
-            );
-            _rotationVelocity -= deltaVelocity;
-            transform.Rotate(Vector3.up, -_rotationVelocity, Space.World);
-            //transform.Rotate(centerPoint.position, -_rotationVelocity, Space.Self);
-        }
-    }
 }
