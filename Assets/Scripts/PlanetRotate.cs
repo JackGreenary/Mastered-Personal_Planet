@@ -17,6 +17,27 @@ public class PlanetRotate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         initialRotation = centerPoint.rotation;
     }
 
+    private void FixedUpdate()
+    {
+        if (isDragging)
+        {
+            Vector3 currentMousePosition = Input.mousePosition;
+            Vector3 mouseDelta = currentMousePosition - initialMousePosition;
+
+            float rotationX = mouseDelta.y * rotationSpeed;
+            float rotationY = -mouseDelta.x * rotationSpeed;
+
+            Debug.Log($"mouseDelta: {mouseDelta}");
+            Debug.Log($"rotationX: {rotationX}");
+            Debug.Log($"rotationY: {rotationY}");
+
+            //Quaternion.AngleAxis();
+
+            Quaternion newRotation = Quaternion.Euler(rotationX, rotationY, 0f) * initialRotation;
+            centerPoint.rotation = newRotation;
+        }
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Left)
@@ -29,16 +50,9 @@ public class PlanetRotate : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public void OnDrag(PointerEventData eventData)
     {
         if (!isDragging)
-            return;
-
-        Vector3 currentMousePosition = Input.mousePosition;
-        Vector3 mouseDelta = currentMousePosition - initialMousePosition;
-
-        float rotationX = mouseDelta.y * rotationSpeed * Time.deltaTime;
-        float rotationY = -mouseDelta.x * rotationSpeed * Time.deltaTime;
-
-        Quaternion newRotation = Quaternion.Euler(rotationX, rotationY, 0f) * initialRotation;
-        centerPoint.rotation = newRotation;
+        {
+            isDragging = true;
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)

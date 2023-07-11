@@ -6294,7 +6294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerPoint: {fileID: 599754983}
-  rotationSpeed: 5
+  rotationSpeed: 0.25
 --- !u!114 &1296457544
 MonoBehaviour:
   m_ObjectHideFlags: 0
